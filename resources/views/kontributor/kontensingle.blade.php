@@ -47,10 +47,15 @@
       </a>
       <p id="artikel">{{$content->subject}}</p>
       <div class="like_wrapper">
+        @if (Route::has('login'))
+        @auth
         <div class="btn {{$content->is_liked() ? 'btn-danger btn-unlike' : 'btn-outline-success btn-like'}}" data-model-id="{{$content->id}}" data-type="1">
-          {{$content->is_liked() ? 'Unlike' : 'Like'}}</div>
-        <div class="total_like">
-            <span class="like_number">{{ $content->likes->count() }}</span> Total Like
+          {{$content->is_liked() ? 'Unlike' : 'Like'}}
+        </div>
+        @endauth
+        @endif
+        <div class="total_like" style="font-weight:bold;">
+            <span class="like_number">{{ $content->likes->count() }}</span> Like
         </div>
       </div>
     </div>
@@ -80,6 +85,8 @@
           @endauth
         </div>
       @endforeach
+      @if (Route::has('login'))
+      @auth
       <form action="/contents-comment/{{$content->id}}" method="post">
         <span>Isi Komentar</span>
         <div class="input-group" style="marign-top:50px;margin-bottom:20px;">
@@ -90,6 +97,8 @@
           <button type="submit" class="btn btn-primary">Komentar</button>
         </div>
       </form>
+      @endauth
+      @endif
     </div>
     <div class="col-4">
 
